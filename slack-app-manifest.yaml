@@ -1,0 +1,18 @@
+display_information:
+  name: WebVouch Review Bridge
+  description: See new WebVouch reviews and reply from Slack.
+  background_color: '#2563EB'
+features:
+  bot_user:
+    display_name: WebVouch
+    always_online: false
+oauth_config:
+  scopes:
+    bot:
+      - chat:write
+settings:
+  interactivity:
+    is_enabled: true
+  socket_mode_enabled: true
+  org_deploy_enabled: false
+  token_rotation_enabled: false
