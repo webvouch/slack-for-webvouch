@@ -1,0 +1,43 @@
+services:
+  slack-review-bridge:
+    image: ghcr.io/webvouch/slack-for-webvouch:${WEBVOUCH_SLACK_IMAGE_TAG:-1.0.0}
+    pull_policy: always
+    restart: unless-stopped
+    init: true
+    environment:
+      WEBVOUCH_API_BASE_URL: ${WEBVOUCH_API_BASE_URL:-https://api.webvouch.com/api}
+      WEBVOUCH_CLIENT_ID: ${WEBVOUCH_CLIENT_ID:?Set WEBVOUCH_CLIENT_ID in .env}
+      WEBVOUCH_CLIENT_SECRET: ${WEBVOUCH_CLIENT_SECRET:?Set WEBVOUCH_CLIENT_SECRET in .env}
+      SLACK_BOT_TOKEN: ${SLACK_BOT_TOKEN:?Set SLACK_BOT_TOKEN in .env}
+      SLACK_APP_TOKEN: ${SLACK_APP_TOKEN:?Set SLACK_APP_TOKEN in .env}
+      SLACK_CHANNEL_ID: ${SLACK_CHANNEL_ID:?Set SLACK_CHANNEL_ID in .env}
+      POLL_INTERVAL_SECONDS: ${POLL_INTERVAL_SECONDS:-60}
+      RATING_FILTER: ${RATING_FILTER:-all}
+      STATE_DIR: /data
+      HEALTH_PORT: 8080
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - 127.0.0.1:${HEALTH_PORT:-8080}:8080
+    volumes:
+      - slack-review-bridge-data:/data
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD
+        - curl
+        - --fail
+        - --silent
+        - http://127.0.0.1:8080/readyz
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  slack-review-bridge-data:
