@@ -18,7 +18,7 @@ jobs:
       attestations: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
@@ -67,7 +67,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Create checksums
         run: shasum -a 256 slack-app-manifest.yaml docker-compose.yml .env.example > SHA256SUMS
       - name: Create GitHub Release
