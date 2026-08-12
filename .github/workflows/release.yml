@@ -75,7 +75,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Create checksums
-        run: shasum -a 256 slack-app-manifest.yaml docker-compose.yml docker-compose.ghcr.yml .env.example > SHA256SUMS
+        run: |
+          cp .env.example default.env.example
+          shasum -a 256 \
+            slack-app-manifest.yaml \
+            docker-compose.yml \
+            docker-compose.ghcr.yml \
+            default.env.example > SHA256SUMS
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -85,7 +91,7 @@ jobs:
             slack-app-manifest.yaml \
             docker-compose.yml \
             docker-compose.ghcr.yml \
-            .env.example \
+            default.env.example \
             SHA256SUMS \
             --verify-tag \
             --generate-notes \
