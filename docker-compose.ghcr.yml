@@ -1,6 +1,6 @@
 services:
   slack-review-bridge:
-    image: ghcr.io/webvouch/slack-for-webvouch:${WEBVOUCH_SLACK_IMAGE_TAG:-1.0.0}
+    image: ghcr.io/webvouch/slack-for-webvouch:${WEBVOUCH_SLACK_IMAGE_TAG:-1.0.1}
     pull_policy: always
     restart: unless-stopped
     init: true
