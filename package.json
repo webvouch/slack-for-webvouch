@@ -14,8 +14,8 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@slack/bolt": "5.0.0",
-    "@slack/types": "3.0.0"
+    "@slack/bolt": "5.1.0",
+    "@slack/types": "3.1.0"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
